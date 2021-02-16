@@ -48,13 +48,14 @@ def detect_face_in_video():
         face = face_classifier.detectMultiScale(gray_frame, 1.1, 4)
 
         if len(face) != 0:
-            print(face)
             (x, y, w, h) = face[0]
 
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
         cv2.imshow('Face Detection', frame)
     
-        k = cv2.waitKey(30) & 0xff
+        k = cv2.waitKey(1)
+        #Closes window when ESC button is pressed.
+        # Modify k = cv2.waitKey(0) & 0xFF for 64-bit machine
         if k==27:
             cv2.destroyAllWindows()
             break
