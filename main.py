@@ -29,9 +29,37 @@ Displays the image in a window with a message and closes that window after a
 key is pressed.
 """
 def display_image(img, img_msg):
-    
     cv2.imshow(img_msg, img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-detect_face_in_image(img)
+"""
+Displays live video with face ROI
+"""
+def detect_face_in_video():
+    #Use the default camera.
+    video = cv2.VideoCapture(0)
+
+    while True:
+        _, frame = video.read()
+
+        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        face = face_classifier.detectMultiScale(gray_frame, 1.1, 4)
+
+        if len(face) != 0:
+            print(face)
+            (x, y, w, h) = face[0]
+
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+        cv2.imshow('Face Detection', frame)
+    
+        k = cv2.waitKey(30) & 0xff
+        if k==27:
+            cv2.destroyAllWindows()
+            break
+
+    video.release()
+
+#detect_face_in_image(img)
+detect_face_in_video()
