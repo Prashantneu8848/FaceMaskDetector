@@ -49,21 +49,28 @@ def detect_face_in_video():
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         face = face_classifier.detectMultiScale(gray_frame, 1.1, 4)
+        eyes = eyes_classifier.detectMultiScale(gray_frame, 1.1, 4)
 
         if len(face) != 0:
             (x, y, w, h) = face[0]
 
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+
+        if len(eyes) != 0:
+            (x_e, y_e, w_e, h_e) = eyes[0]
+
+            cv2.rectangle(frame, (x_e, y_e), (x_e + w_e, y_e + h_e), (0, 255, 0), 2)
+
         cv2.imshow('Face Detection', frame)
     
         k = cv2.waitKey(1)
         #Closes window when ESC button is pressed.
         # Modify k = cv2.waitKey(0) & 0xFF for 64-bit machine
-        if k==27:
+        if k == 27:
             cv2.destroyAllWindows()
             break
 
     video.release()
 
-detect_face_in_image(img)
-#detect_face_in_video()
+# detect_face_in_image(img)
+detect_face_in_video()
