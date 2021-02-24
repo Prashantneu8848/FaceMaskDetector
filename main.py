@@ -3,8 +3,8 @@ import cv2
 import numpy as np
 
 
-img = cv2.imread("./Images/Dr.Feynman.jpg")
-# img = cv2.imread("./Images/Mask.jpg")
+#img = cv2.imread("./Images/Dr.Feynman.jpg")
+#img = cv2.imread("./Images/Mask.jpg")
 face_classifier = cv2.CascadeClassifier("./haarcascade_frontalface_default.xml")
 eyes_classifier = cv2.CascadeClassifier("./haarcascade_frontal_eyes.xml")
 
@@ -72,5 +72,5 @@ def detect_face_in_video():
 
     video.release()
 
-# detect_face_in_image(img)
+#detect_face_in_image(img)
 detect_face_in_video()
