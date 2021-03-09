@@ -1,3 +1,4 @@
 /venv
+/train
 .vscodes
 .ipynb_checkpoints/
