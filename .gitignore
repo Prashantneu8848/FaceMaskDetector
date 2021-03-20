@@ -1,4 +1,6 @@
 /venv
 /Images/catsanddogs
+/Images/dataset
+/Images/sign_lang
 .vscodes
 .ipynb_checkpoints/
