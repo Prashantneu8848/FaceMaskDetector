@@ -4,3 +4,4 @@
 /Images/sign_lang
 .vscodes
 .ipynb_checkpoints/
+__pycache__/
