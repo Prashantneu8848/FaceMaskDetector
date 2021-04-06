@@ -1,6 +1,7 @@
 import tensorflow as tf
 import cv2
 import numpy as np
+import imutils
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from PIL import Image
@@ -39,27 +40,32 @@ def detect_face_in_video():
         if not ret:
             break
         
-        # frame = cv2.resize(frame, (224, 224))
+        frame = imutils.resize(frame, width = 400)
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
+        result = fetch_image_and_predict(frame)
+
+        font = cv2.FONT_HERSHEY_SIMPLEX
 
         face = face_classifier.detectMultiScale(gray_frame, 1.1, 4)
-        # eyes = eyes_classifier.detectMultiScale(gray_frame, 1.1, 4)
+        eyes = eyes_classifier.detectMultiScale(gray_frame, 1.1, 4)
 
         if len(face) != 0:
             (x, y, w, h) = face[0]
 
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-        # if len(eyes) != 0:
-        #     (x_e, y_e, w_e, h_e) = eyes[0]
+        cv2.putText(frame, result, (x,y), font, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
 
-        #     cv2.rectangle(frame, (x_e, y_e), (x_e + w_e, y_e + h_e), (0, 255, 0), 2)
+        if len(eyes) != 0:
+            (x_e, y_e, w_e, h_e) = eyes[0]
+
+            cv2.rectangle(frame, (x_e, y_e), (x_e + w_e, y_e + h_e), (0, 255, 0), 2)
         
-        print(fetch_image_and_predict(frame))
-
         cv2.imshow('Face Detection', frame)
     
         k = cv2.waitKey(1)
+
         #Closes window when ESC button is pressed.
         # Modify k = cv2.waitKey(0) & 0xFF for 64-bit machine
         if k == 27:
