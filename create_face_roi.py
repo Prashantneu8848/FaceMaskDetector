@@ -27,7 +27,7 @@ def detect_face_in_image(img, msg = ''):
     cv2.rectangle(img, (x, y), (x + w , y + h), (255, 0, 0), 2)
     if msg:
         font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(img, msg, (x,y), font, 1, (0, 0, 255), 1, cv2.LINE_AA)
+        cv2.putText(img, msg, (x,y), font, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
     display_image(img, "Face Detection With Eyes")
 
 """
