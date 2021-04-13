@@ -32,7 +32,6 @@ Displays live video with face ROI
 def detect_face_in_video():
     #Use the default camera.
     video = cv2.VideoCapture(0)
-    # video.set(cv2.CAP_PROP_BUFFERSIZE, 2)
 
     while True:
         ret, frame = video.read()
@@ -55,7 +54,7 @@ def detect_face_in_video():
 
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-        cv2.putText(frame, result, (x,y), font, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+            cv2.putText(frame, result, (x,y), font, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
 
         if len(eyes) != 0:
             (x_e, y_e, w_e, h_e) = eyes[0]
