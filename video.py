@@ -72,5 +72,4 @@ def detect_face_in_video():
             break
 
     video.release()
-
-detect_face_in_video()
+    
