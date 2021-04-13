@@ -41,14 +41,15 @@ root = tk.Tk()
 info_frame = tk.Frame(
     master=root,
     relief=tk.RIDGE,
-    borderwidth = 5
+    borderwidth = 5,
+    background = 'black',
 )
 
 button_frame = tk.Frame(
     master=root,
     relief=tk.RIDGE,
     borderwidth = 5
-    )
+)
 
 info = tk.Label(
     master = info_frame,
@@ -57,6 +58,14 @@ info = tk.Label(
     background = 'black',
 )
 info.pack(side=tk.TOP)
+
+creator = tk.Label(
+    master = info_frame,
+    text = 'Created by Prashant Neupane',
+    foreground = 'white',
+    background = 'black',
+)
+creator.pack()
 
 btn_image = tk.Button(
     master = button_frame,
