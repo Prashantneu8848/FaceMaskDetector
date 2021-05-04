@@ -46,21 +46,23 @@ def detect_face_in_video():
 
         font = cv2.FONT_HERSHEY_SIMPLEX
 
-        face = face_classifier.detectMultiScale(gray_frame, 1.1, 4)
+        faces = face_classifier.detectMultiScale(gray_frame, 1.1, 4)
         eyes = eyes_classifier.detectMultiScale(gray_frame, 1.1, 4)
 
-        if len(face) != 0:
-            (x, y, w, h) = face[0]
+        x = None
+        y = None
 
+        for eye in eyes:
+            (x_e, y_e, w_e, h_e) = eye
+            cv2.rectangle(frame, (x_e, y_e), (x_e + w_e, y_e + h_e), (0, 255, 0), 2)
+    
+        for face in faces:
+            (x, y, w, h) = face
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
+        if result and x and y:
             cv2.putText(frame, result, (x,y), font, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
 
-        if len(eyes) != 0:
-            (x_e, y_e, w_e, h_e) = eyes[0]
-
-            cv2.rectangle(frame, (x_e, y_e), (x_e + w_e, y_e + h_e), (0, 255, 0), 2)
-        
         cv2.imshow('Face Detection', frame)
     
         k = cv2.waitKey(1)
