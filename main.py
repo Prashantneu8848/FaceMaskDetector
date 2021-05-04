@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import tkinter as tk
+import tkinter.messagebox as tkmb
 from create_face_roi import detect_face_in_image
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
@@ -29,7 +30,7 @@ def handle_btn_image():
         img = cv2.imread(img_path)
         detect_face_in_image(img, result)
     else:
-        print("user did not select any images.")
+        tkmb.showinfo(message = 'Select an image', title = 'Error', icon='warning')
 
 def handle_btn_video():
     detect_face_in_video()
@@ -38,6 +39,8 @@ def handle_btn_video():
 mask_classify_v1 = load_model('models/mask_classify_v1.h5')
 
 root = tk.Tk()
+root.title('Home')
+
 info_frame = tk.Frame(
     master=root,
     relief=tk.RIDGE,
@@ -91,7 +94,7 @@ btn_video = tk.Button(
 )
 btn_video.pack(side=tk.RIGHT)
 
-info_frame.pack(fill = tk.BOTH,)
-button_frame.pack(fill = tk.BOTH,)
+info_frame.pack(fill = tk.BOTH)
+button_frame.pack(fill = tk.BOTH)
 
 root.mainloop()
