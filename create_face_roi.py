@@ -17,15 +17,19 @@ def detect_face_in_image(img, msg = ''):
         gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     else:
         gray_img = img
-    eyes = eyes_classifier.detectMultiScale(gray_img, 1.5, 5)[0]
-    face = face_classifier.detectMultiScale(gray_img, 1.5, 5)[0]
+    eyes = eyes_classifier.detectMultiScale(gray_img, 1.5, 5)
+    faces = face_classifier.detectMultiScale(gray_img, 1.5, 5)
+    x = None
+    y = None
+    for eye in eyes:
+        (x_e, y_e, w_e, h_e) = eye
+        cv2.rectangle(img, (x_e, y_e), (x_e + w_e, y_e + h_e), (0, 255, 0), 2)
+    
+    for face in faces:
+        (x, y, w, h) = face
+        cv2.rectangle(img, (x, y), (x + w , y + h), (255, 0, 0), 2)
 
-    (x, y, w, h) = face
-    (x_e, y_e, w_e, h_e) = eyes
-
-    cv2.rectangle(img, (x_e, y_e), (x_e + w_e, y_e + h_e), (0, 255, 0), 2)
-    cv2.rectangle(img, (x, y), (x + w , y + h), (255, 0, 0), 2)
-    if msg:
+    if msg and x and y:
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(img, msg, (x,y), font, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
     display_image(img, "Face Detection With Eyes")
@@ -51,18 +55,18 @@ def detect_face_in_video():
 
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        face = face_classifier.detectMultiScale(gray_frame, 1.1, 4)
+        faces = face_classifier.detectMultiScale(gray_frame, 1.1, 4)
         eyes = eyes_classifier.detectMultiScale(gray_frame, 1.1, 4)
 
-        if len(face) != 0:
-            (x, y, w, h) = face[0]
-
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-
-        if len(eyes) != 0:
-            (x_e, y_e, w_e, h_e) = eyes[0]
-
-            cv2.rectangle(frame, (x_e, y_e), (x_e + w_e, y_e + h_e), (0, 255, 0), 2)
+        x = None
+        y = None
+        for eye in eyes:
+            (x_e, y_e, w_e, h_e) = eye
+            cv2.rectangle(gray_frame, (x_e, y_e), (x_e + w_e, y_e + h_e), (0, 255, 0), 2)
+    
+        for face in faces:
+            (x, y, w, h) = face
+            cv2.rectangle(gray_frame, (x, y), (x + w , y + h), (255, 0, 0), 2)
 
         cv2.imshow('Face Detection', frame)
     
@@ -74,6 +78,3 @@ def detect_face_in_video():
             break
 
     video.release()
-
-#detect_face_in_image(img)
-# detect_face_in_video()
